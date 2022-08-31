@@ -1,0 +1,13 @@
+.tabl{
+  display: block;
+}
+
+.row{
+  width: 155px;
+  display:inline-block;
+
+  text-align: center;
+  margin: 5px;
+  padding: 2px;
+  border: 1px solid #001;
+}

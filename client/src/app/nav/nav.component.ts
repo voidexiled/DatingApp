@@ -2,6 +2,8 @@ import { AccountService } from './../_services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../_models/User';
+import { Router } from '@angular/router';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -11,13 +13,8 @@ import { User } from '../_models/User';
 export class NavComponent implements OnInit {
   model: any = {}
 
-  constructor(public accountService: AccountService) {
-    if (localStorage.getItem('user')) {
-      this.model = JSON.parse(localStorage.getItem('user'));
-      console.log(this.model)
+  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) {
 
-    }
-    console.log(this.model)
   }
 
   ngOnInit(): void {
@@ -26,13 +23,13 @@ export class NavComponent implements OnInit {
   }
 
 
-
   login() {
     // console.log(this.model);
     this.accountService.login(this.model).subscribe(response => {
-      console.log(response);
+      this.router.navigateByUrl("/members");
     }, error => {
-      console.log(error);
+      this.toastr.error(error.error);
+      console.log(error.error)
 
     })
 
@@ -40,6 +37,7 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl("/home");
   }
 
 }
